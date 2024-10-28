@@ -11,8 +11,8 @@ jobs:
           sparse-checkout: 'build/grafana'
           sparse-checkout-cone-mode: false
           path: dashboard-configmaps/
-      - name: extract json from yaml configmaps
-        uses: mikefarah/yq@v4.44.3
+      - uses: mikefarah/yq@v4.44.3
+      - name: extract json from yaml
         run: |
           for file in dashboard-configmaps/*.yaml; do
             yq '.data.[]' $file > "${file%.*}.json"
