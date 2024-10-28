@@ -17,9 +17,10 @@ jobs:
       - name: extract json from yaml
         run: |
           for file in dashboard-configmaps/build/grafana/*.yaml; do
+            echo $file
             yq '.data.[]' $file > "${file%.*}.json"
           done;
-          ls -lah
+          ls -lahR dashboard-configmaps
       - name: push changes
         run: |
           git add *.json
