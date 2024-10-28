@@ -16,7 +16,7 @@ jobs:
       - uses: mikefarah/yq@v4.44.3
       - name: extract json from yaml
         run: |
-          for file in dashboard-configmaps/*.yaml; do
+          for file in dashboard-configmaps/build/grafana/*.yaml; do
             yq '.data.[]' $file > "${file%.*}.json"
           done;
       - name: push changes
