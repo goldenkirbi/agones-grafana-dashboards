@@ -1,0 +1,28 @@
+jobs:
+  get-dashboards:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: googleforgames/agones
+          sparse-checkout: 'build/grafana'
+          sparse-checkout-cone-mode: false
+          path: dashboard-configmaps/
+      - name: extract json from yaml configmaps
+        uses: mikefarah/yq@v4.44.3
+        run: |
+          for file in dashboard-configmaps/*.yaml; do
+            yq '.data.[]' $file > "${file%.*}.json"
+          done;
+      - name: push changes
+        run: |
+          git add *.json
+          git config --global user.name 'krbtgt'
+          git config --global user.email '144264613+goldenkirbi@users.noreply.github.com'
+          git commit -am "update dashboard json"
+          git push
+          
+
