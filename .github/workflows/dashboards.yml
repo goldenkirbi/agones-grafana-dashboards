@@ -1,3 +1,5 @@
+on: push
+
 jobs:
   get-dashboards:
     runs-on: ubuntu-latest
